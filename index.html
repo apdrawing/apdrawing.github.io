@@ -1,0 +1,148 @@
+﻿<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Demo of APDrawingGAN</title>
+
+<script type="text/javascript" src="static/jquery-3.4.0.min.js"></script>
+
+<style type="text/css">
+.rule{
+  background-color:#fafafa;
+  font-family:SourceHanSansCN-Regular;
+  font-weight:600;
+  color:#666;
+  text-align:center;
+  font-size: 37rpx;
+}
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+</style>
+
+</head>
+<body style="text-align:center;">
+
+<h1>Demo of APDrawingGAN</h1>
+<h4>This demo transforms a face photo into an artistic portrait drawing. <br/></h4>
+
+<div>
+<img id="srcImg" height="400" src="static/default_img.jpg"></img>
+<img id="resultImg" height="400" src="">
+</div>
+
+<br/>
+<div>
+<span class="rule">Please choose a frontal face photo similar to ID photo,</span> <br/>
+<span class = "rule">preferably with clear face features, no glasses and no long fringe.</span> 
+</div>
+
+<br/><br/>
+<div style="height:50%">
+<button type="button"  id="satisfaction_button"  onclick="click_satisfaction_Button()" class="button" style="display:none;">Satisfaction</button>
+<button type="button"  id="dissatisfaction_button"  onclick="click_dissatisfaction_Button()" class="button" style="display:none;">Dissatisfaction</button>
+<button type="button"  id="upbutton"  onclick="clickButton()" class="button" >choose a face photo</button>
+<input id="upinput" accept="image/*"  onchange="uploadImg(this,'preview')" type="file" style="display:none;" />
+</div>
+
+
+
+</div>
+
+
+
+</body>
+
+<script>
+
+function clickButton() { 
+$('#upinput').click();
+}
+
+function click_satisfaction_Button() { 
+
+ $.ajax({url:"http://39.100.46.50:16001/satisfaction",success:function(result){}});
+	window_alert_feedback()
+}
+
+function click_dissatisfaction_Button() { 
+
+ $.ajax({url:"http://39.100.46.50:16001/unsatisfaction",success:function(result){ }});
+	window_alert_feedback()
+}
+
+function window_alert_feedback(){
+window.alert("Thank you for your feedback!");
+}
+
+
+
+
+//var widthImg = 350;
+function uploadImg(file,imgNum){
+if (file.files && file.files[0]){
+var img = document.getElementById('srcImg');
+img.onload = function(){
+//img.width = widthImg;
+//img.height = heightImg;
+}
+var reader = new FileReader();
+reader.readAsDataURL(file.files[0]);
+reader.onload = function(evt){
+if(reader.readyState === 2){
+img.src = evt.target.result;
+}
+}
+
+
+var oMyForm = new FormData();
+oMyForm.append("file",file.files[0]);
+oMyForm.append("handle_eye","0");
+
+$.ajax({
+                        url: "https://cv.fit3530.com:9100/upload",
+                        type: "POST",
+                        processData: false,
+                        contentType:false,
+                        data: oMyForm,
+                        timeout:50000,
+                        beforeSend: function () {
+                            var resultImg = $("#resultImg");
+                            $("#resultImg").attr("src","static/loading.gif");
+                         },
+                        success: function(d) {
+
+                        if(d == 'error_face'){
+                            $("#resultImg").attr("src","")
+                            alert("Face not detected. Please try another face photo.")
+                        }else{
+                          //$("#resultImg").attr("src","")
+                          //$("#resultImg").attr("width",widthImg);
+                          $("#resultImg").attr("src","https://cv.fit3530.com:9100/image/"+d);
+						  $("#upbutton").text("Get another one!")
+						  $("#satisfaction_button").css('display','');
+						  $("#dissatisfaction_button").css('display','');
+                        }
+                        },
+                        complete: function(XMLHttpRequest, textStatus) {
+                        },
+                         error: function(XMLHttpRequest, textStatus, errorThrown){
+                          alert("Sorry, the server is busy. Please try again later. error info:["+errorThrown+"]  textStatus:["+textStatus+"]")
+                          $("#resultImg").attr("src","")
+                         }
+                    });
+
+}
+}
+</script>
+</html>
