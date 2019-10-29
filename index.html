@@ -110,7 +110,7 @@ oMyForm.append("file",file.files[0]);
 oMyForm.append("handle_eye","0");
 
 $.ajax({
-                        url: "https://cv.fit3530.com:9100/upload",
+                        url: "https://cv.fit3530.com:37167/upload",
                         type: "POST",
                         processData: false,
                         contentType:false,
@@ -128,7 +128,7 @@ $.ajax({
                         }else{
                           //$("#resultImg").attr("src","")
                           //$("#resultImg").attr("width",widthImg);
-                          $("#resultImg").attr("src","https://cv.fit3530.com:9100/image/"+d);
+                          $("#resultImg").attr("src","https://cv.fit3530.com:37167/image/"+d);
 						  $("#upbutton").text("Get another one!")
 						  $("#satisfaction_button").css('display','');
 						  $("#dissatisfaction_button").css('display','');
