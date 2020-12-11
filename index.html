@@ -109,12 +109,12 @@ var oMyForm = new FormData();
 oMyForm.append("file",file.files[0]);
 
 $.ajax({
-                        url: "https://cv.fit3530.com:37167/upload",
+                        url: "https://apdrawing.eicp.vip/upload_for_b162",
                         type: "POST",
                         processData: false,
-                        contentType:false,
+                        contentType: false,
                         data: oMyForm,
-                        timeout:50000,
+                        //timeout: 50000,
                         beforeSend: function () {
                             var resultImg = $("#resultImg");
                             $("#resultImg").attr("src","static/loading.gif");
@@ -127,18 +127,16 @@ $.ajax({
                         }else{
                           //$("#resultImg").attr("src","")
                           //$("#resultImg").attr("width",widthImg);
-                          $("#resultImg").attr("src","https://cv.fit3530.com:37167/image/"+d);
-						  $("#upbutton").text("Get another one!")
-						  $("#satisfaction_button").css('display','');
-						  $("#dissatisfaction_button").css('display','');
+                          $("#resultImg").attr("src","https://apdrawing.eicp.vip/image/"+d);
+                          $("#upbutton").text("Get another one!")
+                          $("#satisfaction_button").css('display','');
+                          $("#dissatisfaction_button").css('display','');
                         }
                         },
-                        complete: function(XMLHttpRequest, textStatus) {
-                        },
-                         error: function(XMLHttpRequest, textStatus, errorThrown){
+                        error: function(XMLHttpRequest, textStatus, errorThrown){
                           alert("Sorry, the server is busy. Please try again later. error info:["+errorThrown+"]  textStatus:["+textStatus+"]")
                           $("#resultImg").attr("src","")
-                         }
+                        }
                     });
 
 }
