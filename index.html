@@ -49,8 +49,7 @@
 
 <br/><br/>
 <div style="height:50%">
-<button type="button"  id="satisfaction_button"  onclick="click_satisfaction_Button()" class="button" style="display:none;">Satisfaction</button>
-<button type="button"  id="dissatisfaction_button"  onclick="click_dissatisfaction_Button()" class="button" style="display:none;">Dissatisfaction</button>
+
 <button type="button"  id="upbutton"  onclick="clickButton()" class="button" >choose a face photo</button>
 <input id="upinput" accept="image/*"  onchange="uploadImg(this,'preview')" type="file" style="display:none;" />
 </div>
@@ -67,22 +66,6 @@
 
 function clickButton() { 
 $('#upinput').click();
-}
-
-function click_satisfaction_Button() { 
-
- $.ajax({url:"http://39.100.46.50:16001/satisfaction",success:function(result){}});
-	window_alert_feedback()
-}
-
-function click_dissatisfaction_Button() { 
-
- $.ajax({url:"http://39.100.46.50:16001/unsatisfaction",success:function(result){ }});
-	window_alert_feedback()
-}
-
-function window_alert_feedback(){
-window.alert("Thank you for your feedback!");
 }
 
 
@@ -129,8 +112,8 @@ $.ajax({
                           //$("#resultImg").attr("width",widthImg);
                           $("#resultImg").attr("src","https://apdrawing.eicp.vip/image/"+d);
                           $("#upbutton").text("Get another one!")
-                          $("#satisfaction_button").css('display','');
-                          $("#dissatisfaction_button").css('display','');
+                          //$("#satisfaction_button").css('display','');
+                          //$("#dissatisfaction_button").css('display','');
                         }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown){
