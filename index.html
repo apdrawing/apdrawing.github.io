@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Demo of APDrawingGAN</title>
+<title>Demo of APDrawing Generation</title>
 
 <script type="text/javascript" src="static/jquery-3.4.0.min.js"></script>
 
@@ -33,18 +33,24 @@
 </head>
 <body style="text-align:center;">
 
-<h1>Demo of APDrawingGAN</h1>
-<h4>This demo transforms a face photo into an artistic portrait drawing. <br/></h4>
+<h1>Demo of APDrawing Generation</h1>
+<!--<h4>This demo transforms a face photo into an artistic portrait drawing. <br/></h4>-->
+<h4>This demo transforms a face photo into artistic portrait line drawings of multiple styles <br></h4>
 
 <div>
 <img id="srcImg" height="400" src="static/default_img.jpg"></img>
-<img id="resultImg" height="400" src="">
+<img id="resultImg" height="400" src=""></img>
+<img id="resultImg2" height="400" src=""></img>
+<img id="resultImg3" height="400" src=""></img>
 </div>
 
 <br/>
 <div>
+<!--.
 <span class="rule">Please choose a frontal face photo similar to ID photo,</span> <br/>
 <span class = "rule">preferably with clear face features, no glasses and no long fringe.</span> 
+-->
+<span class="rule">Please choose a face photo</span>
 </div>
 
 <br/><br/>
@@ -101,6 +107,8 @@ $.ajax({
                         beforeSend: function () {
                             var resultImg = $("#resultImg");
                             $("#resultImg").attr("src","static/loading.gif");
+                            $("#resultImg2").attr("src","static/loading.gif");
+                            $("#resultImg3").attr("src","static/loading.gif");
                          },
                         success: function(d) {
 
@@ -111,6 +119,8 @@ $.ajax({
                           //$("#resultImg").attr("src","")
                           //$("#resultImg").attr("width",widthImg);
                           $("#resultImg").attr("src","https://apdrawing.eicp.vip/image/"+d);
+                          $("#resultImg2").attr("src","https://apdrawing.eicp.vip/image2/"+d);
+                          $("#resultImg3").attr("src","https://apdrawing.eicp.vip/image3/"+d);
                           $("#upbutton").text("Get another one!")
                           //$("#satisfaction_button").css('display','');
                           //$("#dissatisfaction_button").css('display','');
